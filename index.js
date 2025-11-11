@@ -4,7 +4,7 @@ const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 
 const admin = require("firebase-admin");
 require("dotenv").config();
-const serviceAccount = require("./pawmart-petshop-firebase.json");
+const serviceAccount = require("./firebaseKey.json");
 
 const app = express();
 const port = 3000;
@@ -107,6 +107,16 @@ async function run() {
     app.get("/my-listing", verifyToken, async (req, res) => {
       const email = req.query.email;
       const result = await listingCollection.find({ email: email }).toArray();
+      res.send(result);
+    });
+
+    // categories
+
+    app.get("/categories", async (req, res) => {
+      const categoryName = req.query.category;
+      const result = await listingCollection
+        .find({ category: categoryName })
+        .toArray();
       res.send(result);
     });
 
