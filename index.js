@@ -3,7 +3,7 @@ const cors = require("cors");
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 
 const admin = require("firebase-admin");
-
+require("dotenv").config();
 const serviceAccount = require("./pawmart-petshop-firebase.json");
 
 const app = express();
@@ -13,15 +13,12 @@ app.use(cors());
 app.use(express.json());
 
 // mongoDB
-// pawMart
-// yQtgIzCXxqj9yY9o
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 });
 
-const uri =
-  "mongodb+srv://pawMart:yQtgIzCXxqj9yY9o@cluster5656.l9idbez.mongodb.net/?appName=Cluster5656";
+const uri = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster5656.l9idbez.mongodb.net/?appName=Cluster5656`;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
