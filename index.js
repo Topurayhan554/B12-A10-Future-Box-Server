@@ -129,6 +129,17 @@ async function run() {
       res.send(result);
     });
 
+    // delete orders
+    app.delete("/delete-orders/:id", async (req, res) => {
+      const { id } = req.params;
+
+      const result = await orderCollection.deleteOne({ _id: new ObjectId(id) });
+      res.send({
+        success: true,
+        result,
+      });
+    });
+
     // recent listing
 
     app.get("/recent-listing", async (req, res) => {
